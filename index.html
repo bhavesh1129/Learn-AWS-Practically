@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World!</title>
+
+    <style>
+        body {
+            background-color: #232F3E;
+        }
+        
+        label,
+        button {
+            color: #FF9900;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            margin-left: 40px;
+        }
+        
+        input {
+            color: #232F3F;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 20px;
+            margin-left: 20px;
+        }
+    </style>
+
+    <script>
+        var callAPI = (firstName, lastName) => {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+
+            var raw = JSON.stringify({
+                "firstName": firstName,
+                "lastName": lastName
+            });
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
+            fetch("https://4vf9eyy3l3.execute-api.ap-northeast-1.amazonaws.com/dev", requestOptions)
+                .then(res => res.text())
+                .then(result => alert(JSON.parse(result).body))
+                .catch(err => console.log('error', err));
+        }
+    </script>
+</head>
+
+<body>
+    <form>
+        <label>First Name : </label>
+        <input type="text" id="fName">
+        <label>Last Name : </label>
+        <input type="text" id="lName">
+        <button onclick="callAPI(document.getElementById('fName').vaue, document.getElementById('lName').vaue)">Call API</button>
+    </form>
+</body>
+
+</html>
